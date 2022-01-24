@@ -1,0 +1,46 @@
+{
+  "name": "@norniras/service-agent",
+  "version": "0.1.0",
+  "description": "Service agent made for handling incomming data and commands.",
+  "main": "./lib/main.js",
+  "types": "./lib/main.d.ts",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "pnpm build",
+    "dev": "ts-node-dev ./src/examples/basic.ts"
+  },
+  "author": "Jevgeni Glazunov",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^14.2.0",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.8",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.2.3"
+  },
+  "engines": {
+    "node": ">=14",
+    "pnpm": ">=6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/norniras/service-agent.git"
+  },
+  "keywords": [
+    "RTW",
+    "Real Time Web",
+    "Service Agent",
+    "Nornir AS",
+    "Hive",
+    "Synx"
+  ],
+  "bugs": {
+    "url": "https://github.com/norniras/service-agent/issues"
+  },
+  "homepage": "https://github.com/norniras/service-agent#readme"
+}
