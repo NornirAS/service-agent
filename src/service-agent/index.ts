@@ -1,7 +1,7 @@
 import fetch, { Response } from 'node-fetch';
 
 interface ServiceAgentParams {
-  url: string,
+  serviceUrl: string,
   token: string
 }
 
@@ -10,9 +10,8 @@ interface Headers {
 }
 
 interface SendDataParams {
-  targetUrl: string,
   ghostId: string,
-  data: string
+  dataString: string
 }
 
 interface SendCommandParams {
@@ -21,18 +20,18 @@ interface SendCommandParams {
 }
 
 export class ServiceAgent {
-  private url: string
+  private serviceUrl: string
   private token: string
   private ghostId = 0 // Default value available only for service owner.
 
-  constructor({ url, token }: ServiceAgentParams) {
-    this.url = url,
+  constructor({ serviceUrl, token }: ServiceAgentParams) {
+    this.serviceUrl = serviceUrl,
     this.token = token
   }
 
   private get domain(): string | void {
     const regExp = /\w[\w-]+\w(?=\.)/i;
-    const result = regExp.exec(this.url);
+    const result = regExp.exec(this.serviceUrl);
     
     if (!result) return;
     
@@ -41,7 +40,7 @@ export class ServiceAgent {
 
   private get service(): string | void {
     const regExp = /(?<=(\w[\w-]+\w\.\w+)\/)(\w[\w-]+\w)/i;
-    const result = regExp.exec(this.url);
+    const result = regExp.exec(this.serviceUrl);
     
     if (!result) return;
     
@@ -75,7 +74,7 @@ export class ServiceAgent {
     try {
       console.log('Agent is listening');
       const { body } = await fetch(
-        this.url,
+        this.serviceUrl,
         {
           body: `token=${this.token}&objectID=${this.ghostId}&format=json`,
           headers: {
@@ -120,12 +119,12 @@ export class ServiceAgent {
    * Data can be sendt to any ghost of this service by specifying ID of the ghost.
    * @param {SendDataParams}
    */
-  public async sendData({ targetUrl, ghostId, data }: SendDataParams): Promise<void> {
+  public async sendData({ ghostId, dataString }: SendDataParams): Promise<void> {
     try {
       await fetch(
-        targetUrl,
+        this.serviceUrl,
         {
-          body: `token=${this.token}&objectID=${ghostId}&${data}`,
+          body: `token=${this.token}&objectID=${ghostId}&${dataString}`,
           headers: {
             ...this.baseHeaders,
             ...{ 'Synx-Cat': '1' }

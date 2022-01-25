@@ -1,5 +1,5 @@
 import { ServiceAgent } from '../main';
-import { token } from '../config';
+import { token, serviceUrl, targetUrl } from '../config';
 
 interface Message {
   data: {
@@ -10,12 +10,9 @@ interface Message {
   }
 };
 
-// Service URL for the agent
-const url = 'https://demo.cioty.com/sensora';
-
 // Initialize agent with URL and TOKEN
 const agent = new ServiceAgent({
-  url,
+  serviceUrl,
   token
 });
 
@@ -31,13 +28,12 @@ const msgHandler = ({ data, command }: Message): void => {
     console.log(command);
     const commandString = agent.getQueryStringFromObject(command);
     agent.sendCommand({
-      targetUrl: `https://demo.cioty.com/sensora`,
+      targetUrl,
       commandString
     })
     agent.sendData({
-      targetUrl: `https://demo.cioty.com/sensora`,
       ghostId: '1',
-      data: 'id=1'
+      dataString: 'id=1'
     })
   }
 };
