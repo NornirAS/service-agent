@@ -1,64 +1,39 @@
-name: service-agent
-on:
-  push:
+name: Deploy Service Agent
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14]
     steps:
-
     - uses: actions/checkout@v2
-
     - uses: pnpm/action-setup@v2.0.1
       with:
         version: 6.28.0
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    - uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 14
+        cache: 'pnpm'
+    - run: pnpm install --ignore-scripts
 
-    - name: Install dependencies
-      run: pnpm install --ignore-scripts
-
-  publish-npm:
+  publish:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: pnpm/action-setup@v2.0.1
+    - uses: actions/checkout@v2
+    - uses: pnpm/action-setup@v2.0.1
+      with:
+        version: 6.28.0
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 14
+        registry-url: https://registry.npmjs.org/
+        cache: 'pnpm'
+    - run: pnpm install
+    - run: pnpm publish --access public --ignore-scripts
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+    - uses: actions/setup-node@v2
         with:
-          version: 6.28.0
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-          registry-url: https://registry.npmjs.org/
-
-      - run: pnpm install
-      - run: pnpm publish --access public --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.28.0
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
           registry-url: https://npm.pkg.github.com/
-
-      - run: pnpm install
-      - run: pnpm publish --access public --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - run: pnpm publish --access public --ignore-scripts
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
