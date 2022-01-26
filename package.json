@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepare": "pnpm build",
+    "prepublishOnly": "pnpm build",
     "dev": "ts-node-dev ./src/examples/basic.ts"
   },
   "author": "Jevgeni Glazunov",
