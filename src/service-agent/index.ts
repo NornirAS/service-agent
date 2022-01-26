@@ -70,7 +70,7 @@ export class ServiceAgent {
    * @returns ReadableStream object.
    */
   public async listen(cb: Function): Promise<Response|void> {
-    let readableStream: NodeJS.ReadableStream |  null;
+    let readableStream: NodeJS.ReadableStream | null;
     try {
       console.log('Agent is listening');
       const { body } = await fetch(
