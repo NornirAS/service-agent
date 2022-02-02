@@ -2,7 +2,8 @@ import fetch, { Response } from 'node-fetch';
 
 interface ServiceAgentParams {
   serviceUrl: string,
-  token: string
+  token: string,
+  ghostId: string
 }
 
 interface Headers {
@@ -22,11 +23,12 @@ interface SendCommandParams {
 export class ServiceAgent {
   private serviceUrl: string
   private token: string
-  private ghostId = 0 // Default value available only for service owner.
+  private ghostId = '0' // Default value only for service owner.
 
-  constructor({ serviceUrl, token }: ServiceAgentParams) {
+  constructor({ serviceUrl, token, ghostId }: ServiceAgentParams) {
     this.serviceUrl = serviceUrl,
-    this.token = token
+    this.token = token,
+    this.ghostId = ghostId
   }
 
   private get domain(): string | void {
