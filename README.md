@@ -31,8 +31,9 @@ import { ServiceAgent } from '@norniras/service-agent';
 
 const agent = new ServiceAgent({
   serviceUrl: 'https://demo.cioty.com/service', // service URL
-  token: 'aToken' // token
-  ghostId: '' // ghost id
+  token: 'aToken', // token
+  ghostId: '0', // ghost id
+  restartStream: true // Optional, default is true.
 });
 ```
 

@@ -3,7 +3,8 @@ import fetch, { Response } from 'node-fetch';
 interface ServiceAgentParams {
   serviceUrl: string,
   token: string,
-  ghostId: string
+  ghostId: string,
+  restartStream: boolean
 }
 
 interface Headers {
@@ -24,11 +25,13 @@ export class ServiceAgent {
   private serviceUrl: string
   private token: string
   private ghostId: string
+  private restartStream: boolean
 
-  constructor({ serviceUrl, token, ghostId }: ServiceAgentParams) {
+  constructor({ serviceUrl, token, ghostId, restartStream = true }: ServiceAgentParams) {
     this.serviceUrl = serviceUrl,
     this.token = token,
-    this.ghostId = ghostId
+    this.ghostId = ghostId,
+    this.restartStream = restartStream
   }
 
   private get domain(): string | void {
@@ -114,6 +117,7 @@ export class ServiceAgent {
 
     readableStream.on('close', () => {
       console.log('Agent is closed');
+      if (this.restartStream) this.listen(cb);
     });
   }
 
