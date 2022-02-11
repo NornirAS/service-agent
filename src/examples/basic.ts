@@ -13,7 +13,8 @@ interface Message {
 // Initialize agent with URL and TOKEN
 const agent = new ServiceAgent({
   serviceUrl,
-  token
+  token,
+  ghostId: '0'
 });
 
 // Callback with the logic that will handle incomming data/commands

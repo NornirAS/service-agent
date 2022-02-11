@@ -4,7 +4,7 @@ interface ServiceAgentParams {
   serviceUrl: string,
   token: string,
   ghostId: string,
-  restartStream: boolean
+  restartStream?: boolean
 }
 
 interface Headers {

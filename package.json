@@ -1,6 +1,6 @@
 {
   "name": "@norniras/service-agent",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Service agent made for handling incoming data and commands.",
   "main": "./lib/main.js",
   "types": "./lib/main.d.ts",
