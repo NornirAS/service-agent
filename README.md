@@ -30,8 +30,9 @@ pnpm add @norniras/service-agent
 import { ServiceAgent } from '@norniras/service-agent';
 
 const agent = new ServiceAgent({
-  url: 'https://demo.cioty.com/service', // service URL
+  serviceUrl: 'https://demo.cioty.com/service', // service URL
   token: 'aToken' // token
+  ghostId: '' // ghost id
 });
 ```
 

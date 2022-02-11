@@ -23,7 +23,7 @@ interface SendCommandParams {
 export class ServiceAgent {
   private serviceUrl: string
   private token: string
-  private ghostId = '0' // Default value only for service owner.
+  private ghostId: string
 
   constructor({ serviceUrl, token, ghostId }: ServiceAgentParams) {
     this.serviceUrl = serviceUrl,
